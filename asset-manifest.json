@@ -1,0 +1,11 @@
+{
+  "files": {
+    "main.css": "/kt-grid-drawing/static/css/main.0577f33a.css",
+    "main.js": "/kt-grid-drawing/static/js/main.28e5667e.js",
+    "index.html": "/kt-grid-drawing/index.html"
+  },
+  "entrypoints": [
+    "static/css/main.0577f33a.css",
+    "static/js/main.28e5667e.js"
+  ]
+}
