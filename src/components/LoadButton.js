@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { loadImageDataFromFileAsync } from '../helpers';
+import { getImageDataFromFileAsync } from '../helpers';
 import { initGridWithImageData } from '../slice';
 
 const LoadButton = () => {
@@ -17,7 +17,7 @@ const LoadButton = () => {
       const [file] = event.target.files;
 
       if (file) {
-        loadImageDataFromFileAsync(file)
+        getImageDataFromFileAsync(file)
           .then(imageData => dispatch(initGridWithImageData(imageData)))
           .catch(error => console.error(error));
       }

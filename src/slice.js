@@ -80,6 +80,13 @@ export const slice = createSlice({
   }
 });
 
-export const { initGrid, initGridWithImageData, openPicker, closePicker, setActiveColor, setDot } = slice.actions;
+export const {
+  initGrid,
+  initGridWithImageData,
+  openPicker,
+  closePicker,
+  setActiveColor,
+  setDot
+} = slice.actions;
 
 export default slice.reducer;

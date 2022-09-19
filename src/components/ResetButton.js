@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { setDataUrlToLocalStorage } from '../helpers';
 
 import { initGrid } from './../slice';
 
@@ -31,6 +32,7 @@ const ResetButton = () => {
   const resetCallback = useCallback(
     () => {
       dispatch(initGrid({ width, height, color }));
+      setDataUrlToLocalStorage('');
       closeCallback();
     },
     [dispatch, closeCallback, width, height, color]

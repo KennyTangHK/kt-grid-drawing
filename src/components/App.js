@@ -1,22 +1,29 @@
 import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useStore } from 'react-redux';
 
 import { initGrid, initGridWithImageData } from './../slice';
 
 import ExportButton from './ExportButton';
+import Grid from './Grid';
 import LoadButton from './LoadButton';
 import ResetButton from './ResetButton';
 import SaveButton from './SaveButton';
-import Grid from './Grid';
-import { loadImageDataFromLocalStorageAsync } from '../helpers';
+
+import {
+  getImageDataFromLocalStorageAsync,
+  setDataUrlToLocalStorage,
+  saveGridToDataUrl
+} from '../helpers';
 
 const App = () => {
+  const store = useStore();
   const dispatch = useDispatch();
+
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(
     () => {
-      loadImageDataFromLocalStorageAsync()
+      getImageDataFromLocalStorageAsync()
         .then(
           imageData => {
             dispatch(initGridWithImageData(imageData));
@@ -29,8 +36,21 @@ const App = () => {
             setIsLoading(false);
           }
         );
+      
+      const interval = setInterval(
+        () => {
+          const { main } = store.getState();
+          const { grid, width, height } = main;
+
+          const dataUrl = saveGridToDataUrl(grid, width, height);
+          setDataUrlToLocalStorage(dataUrl);
+        },
+        15000
+      );
+
+      return () => clearInterval(interval);
     },
-    [dispatch]
+    [dispatch, store]
   );
 
   if (isLoading) {
@@ -40,8 +60,8 @@ const App = () => {
   }
 
   return (
-    <div className='w-max'>
-      <div className='w-max mx-16 py-8'>
+    <div className='w-max px-16 pb-16'>
+      <div className='w-max py-8'>
         <div className='flex space-x-3 items-center'>
           <div className='flex'><LoadButton /></div>
           <div className='flex'><SaveButton /></div>
@@ -49,7 +69,7 @@ const App = () => {
           <div className='flex'><ResetButton /></div>
         </div>
       </div>
-      <div className='w-max mx-16 mb-16 p-16 bg-white border border-slate-300 rounded'>
+      <div className='w-max p-16 bg-white border border-slate-300 rounded'>
         <Grid />
       </div>
     </div>

@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { useStore } from 'react-redux';
-import { saveGridToDataUrl, downloadDataUrl } from '../helpers';
+import { saveGridToDataUrl, downloadDataUrlToTextFile } from '../helpers';
 
 const SaveButton = () => {
   const store = useStore();
@@ -25,7 +25,7 @@ const SaveButton = () => {
       const { grid, width, height } = main;
 
       const dataUrl = saveGridToDataUrl(grid, width, height);
-      downloadDataUrl(dataUrl, `${ fileName }.txt`);
+      downloadDataUrlToTextFile(dataUrl, `${ fileName }.txt`);
 
       closeCallback();
     },

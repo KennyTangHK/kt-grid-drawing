@@ -1,6 +1,6 @@
 const localStorageKey = 'grid';
 
-const loadTextFromFileAsync = file => new Promise(
+const getTextFromFileAsync = file => new Promise(
   (resolve, reject) => {
     const reader = new FileReader();
     reader.addEventListener('load', () => resolve(reader.result), false);
@@ -9,7 +9,7 @@ const loadTextFromFileAsync = file => new Promise(
   }
 ); 
 
-const loadImageFromDataUrlAsync = dataUrl => new Promise(
+const getImageFromDataUrlAsync = dataUrl => new Promise(
   (resolve, reject) => {
     const image = new Image();
     image.addEventListener('load', () => resolve(image), false);
@@ -30,23 +30,40 @@ const getImageDataFromImage = image => {
   return { width, height, data: [...data] };
 };
 
-export const loadImageDataFromFileAsync = async file => {
-  const dataUrl = await loadTextFromFileAsync(file);
-  const image = await loadImageFromDataUrlAsync(dataUrl);
+const getImageDataFromFileAsync = async file => {
+  const dataUrl = await getTextFromFileAsync(file);
+  const image = await getImageFromDataUrlAsync(dataUrl);
 
   return getImageDataFromImage(image);
 };
 
-export const loadImageDataFromLocalStorageAsync = async () => {
+const getImageDataFromLocalStorageAsync = async () => {
   const dataUrl = localStorage.getItem(localStorageKey);
-  const image = await loadImageFromDataUrlAsync(dataUrl);
+  const image = await getImageFromDataUrlAsync(dataUrl);
 
   return getImageDataFromImage(image);
 };
 
-export const saveDataUrlToLocalStorage = dataUrl => localStorage.setItem(localStorageKey, dataUrl);
+const saveGridToDataUrl = (grid, width, height) => {
+  const canvas = document.createElement('canvas');
+  canvas.width = width + 1;
+  canvas.height = (height * 2) + 1;
 
-export const exportGridToDataUrl = (grid, width, height, ridius) => {
+  const ctx = canvas.getContext('2d');
+
+  grid.forEach(
+    (row, r) => row.forEach(
+      (_, c) => {
+        ctx.fillStyle = grid[r][c];
+        ctx.fillRect(c, r, 1, 1);
+      }
+    )
+  );
+
+  return canvas.toDataURL('image/png');
+};
+
+const exportGridToDataUrl = (grid, width, height, ridius) => {
   const canvas = document.createElement('canvas');
 
   const diameter = ridius * 2;
@@ -80,28 +97,28 @@ export const exportGridToDataUrl = (grid, width, height, ridius) => {
   return canvas.toDataURL('image/png');
 };
 
-export const saveGridToDataUrl = (grid, width, height) => {
-  const canvas = document.createElement('canvas');
-  canvas.width = width + 1;
-  canvas.height = (height * 2) + 1;
+const setDataUrlToLocalStorage = dataUrl => localStorage.setItem(localStorageKey, dataUrl);
 
-  const ctx = canvas.getContext('2d');
-
-  grid.forEach(
-    (row, r) => row.forEach(
-      (_, c) => {
-        ctx.fillStyle = grid[r][c];
-        ctx.fillRect(c, r, 1, 1);
-      }
-    )
-  );
-
-  return `data:text/plain;charset=utf-8,${ encodeURIComponent(canvas.toDataURL('image/png')) }`;
-};
-
-export const downloadDataUrl = (dataUrl, fileName) => {
+const downloadDataUrl = (dataUrl, fileName) => {
   const anchor = document.createElement('a');
   anchor.setAttribute('href', dataUrl);
   anchor.setAttribute('download', fileName);
   anchor.click();
+};
+
+const downloadDataUrlToTextFile = (dataUrl, fileName) => {
+  const anchor = document.createElement('a');
+  anchor.setAttribute('href', `data:text/plain;charset=utf-8,${ encodeURIComponent(dataUrl) }`);
+  anchor.setAttribute('download', fileName);
+  anchor.click();
+};
+
+export {
+  getImageDataFromFileAsync,
+  getImageDataFromLocalStorageAsync,
+  saveGridToDataUrl,
+  exportGridToDataUrl,
+  setDataUrlToLocalStorage,
+  downloadDataUrl,
+  downloadDataUrlToTextFile,
 };
