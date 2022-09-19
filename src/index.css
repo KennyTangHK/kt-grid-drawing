@@ -2,6 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-::-webkit-color-swatch {
-  border: none;
+::-webkit-color-swatch-wrapper {
+  display: none;
 }

@@ -1,6 +1,8 @@
+import rgba from 'color-rgba';
+
 const localStorageKey = 'grid';
 
-const getTextFromFileAsync = file => new Promise(
+const _getTextFromFileAsync = file => new Promise(
   (resolve, reject) => {
     const reader = new FileReader();
     reader.addEventListener('load', () => resolve(reader.result), false);
@@ -9,7 +11,7 @@ const getTextFromFileAsync = file => new Promise(
   }
 ); 
 
-const getImageFromDataUrlAsync = dataUrl => new Promise(
+const _getImageFromDataUrlAsync = dataUrl => new Promise(
   (resolve, reject) => {
     const image = new Image();
     image.addEventListener('load', () => resolve(image), false);
@@ -31,15 +33,15 @@ const getImageDataFromImage = image => {
 };
 
 const getImageDataFromFileAsync = async file => {
-  const dataUrl = await getTextFromFileAsync(file);
-  const image = await getImageFromDataUrlAsync(dataUrl);
+  const dataUrl = await _getTextFromFileAsync(file);
+  const image = await _getImageFromDataUrlAsync(dataUrl);
 
   return getImageDataFromImage(image);
 };
 
 const getImageDataFromLocalStorageAsync = async () => {
   const dataUrl = localStorage.getItem(localStorageKey);
-  const image = await getImageFromDataUrlAsync(dataUrl);
+  const image = await _getImageFromDataUrlAsync(dataUrl);
 
   return getImageDataFromImage(image);
 };
@@ -113,6 +115,14 @@ const downloadDataUrlToTextFile = (dataUrl, fileName) => {
   anchor.click();
 };
 
+const normalizeColor = color => {
+  const [r, g, b] = rgba(color);
+  const value = r * 65536 + g * 256 + b;
+  const str = `000000${ value.toString(16) }`.slice(-6).toLowerCase();
+
+  return `#${ str }`;
+};
+
 export {
   getImageDataFromFileAsync,
   getImageDataFromLocalStorageAsync,
@@ -121,4 +131,5 @@ export {
   setDataUrlToLocalStorage,
   downloadDataUrl,
   downloadDataUrlToTextFile,
+  normalizeColor,
 };

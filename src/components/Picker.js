@@ -1,5 +1,3 @@
-import debounce from 'lodash.debounce';
-
 import { useCallback, useMemo } from 'react';
 import { shallowEqual, useSelector } from 'react-redux';
 
@@ -13,14 +11,9 @@ const Picker = ({ onColorChange }) => {
 
   const { activeColor, colors } = useSelector(selector, shallowEqual);
 
-  const onColorChangeDebounce = useMemo(
-    () => debounce(onColorChange, 100),
-    [onColorChange]
-  );
-
   const onActiveColorChange = useCallback(
-    event => onColorChangeDebounce(event.target.value, false),
-    [onColorChangeDebounce]
+    color => onColorChange(color, false),
+    [onColorChange]
   );
 
   const onSelectColorCallbacks = useMemo(
@@ -32,7 +25,7 @@ const Picker = ({ onColorChange }) => {
     <div className='relative -translate-x-1/2 w-max px-3 py-4 bg-violet-100 ring-2 ring-violet-900 rounded'>
       <div className='flex space-x-3 leading-6'>
         <div className='w-4 h-4 flex'>
-          <ColorInput value={ activeColor } onChange={ onActiveColorChange } />
+          <ColorInput color={ activeColor } onColorChange={ onActiveColorChange } />
         </div>
         <div className='w-px h-4 flex bg-black' />
         {

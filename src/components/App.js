@@ -32,7 +32,7 @@ const App = () => {
         )
         .catch(
           () => {
-            dispatch(initGrid({ width: 15, height: 15, color: '#CCCCCC' }));
+            dispatch(initGrid({ width: 15, height: 15, color: '#cccccc' }));
             setIsLoading(false);
           }
         );

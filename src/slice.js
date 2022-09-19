@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { normalizeColor } from './helpers';
 
 export const slice = createSlice({
   name: 'main',
@@ -8,12 +9,13 @@ export const slice = createSlice({
     height: 0,
     isPickerOpen: false,
     pickerPosition: { r: 0, c: 0 },
-    activeColor: '#581C87',
-    colors: ['#CCCCCC']
+    activeColor: '#581c87',
+    colors: ['#cccccc']
   },
   reducers: {
     initGrid: (state, { payload }) => {
       const { width, height, color } = payload;
+      const _color = normalizeColor(color);
 
       state.isPickerOpen = false;
 
@@ -28,7 +30,7 @@ export const slice = createSlice({
           Array((height * 2) + 1),
           (_, r) => Array.from(
             Array(width + (r & 1)),
-            () => color
+            () => _color
           )
         );
       }
@@ -47,7 +49,7 @@ export const slice = createSlice({
           Array(width + (r & 1)),
           (_, c) => {
             const pointer = ((r * (width + 1)) + c) * 4;
-            return `rgb(${ data[pointer] }, ${ data[pointer + 1] }, ${ data[pointer+ 2] })`;
+            return normalizeColor(`rgb(${ data[pointer] }, ${ data[pointer + 1] }, ${ data[pointer + 2] })`);
           }
         )
       );
@@ -69,7 +71,7 @@ export const slice = createSlice({
     },
 
     setActiveColor: (state, { payload }) => {
-      state.activeColor = payload;
+      state.activeColor = normalizeColor(payload);
     },
 
     setDot: (state, { payload }) => {

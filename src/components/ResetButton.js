@@ -19,7 +19,7 @@ const ResetButton = () => {
       setIsOpen(true);
       setWidth(15);
       setHeight(15);
-      setColor('#CCCCCC');
+      setColor('#cccccc');
     },
     [setIsOpen]
   );
@@ -27,7 +27,7 @@ const ResetButton = () => {
 
   const setWidthCallback = useCallback(event => setWidth(parseInt(event.target.value, 10)), [setWidth]);
   const setHeightCallback = useCallback(event => setHeight(parseInt(event.target.value, 10)), [setHeight]);
-  const setColorCallback = useCallback(event => setColor(event.target.value), [setColor]);
+  const setColorCallback = useCallback(color => setColor(color), [setColor]);
 
   const resetCallback = useCallback(
     () => {
@@ -66,7 +66,7 @@ const ResetButton = () => {
           </div>
           <label className='flex text-sm'>底色</label>
           <div className='flex w-4 h-4'>
-            <ColorInput value={ color } onChange={ setColorCallback } />
+            <ColorInput color={ color } onColorChange={ setColorCallback } />
           </div>
           <div className='flex w-2 h-px' />
           <div className='flex h-8'>
