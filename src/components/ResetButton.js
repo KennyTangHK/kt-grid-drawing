@@ -51,6 +51,7 @@ const ResetButton = () => {
               onChange={ setWidthCallback }
               id='width'
               type='number'
+              pattern='\d*'
               className={ inputClassName }
             />
           </div>
@@ -61,6 +62,7 @@ const ResetButton = () => {
               onChange={ setHeightCallback }
               id='height'
               type='number'
+              pattern='\d*'
               className={ inputClassName }
             />
           </div>

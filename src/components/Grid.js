@@ -5,7 +5,7 @@ import Dot from './Dot';
 
 const Grid = () => {
   const selector = useCallback(
-    ({ main }) => ({ width: main.width, height: main.height }),
+    ({ main: { width, height } }) => ({ width, height }),
     []
   );
 

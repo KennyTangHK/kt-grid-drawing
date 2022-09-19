@@ -5,7 +5,7 @@ import ColorInput from './ColorInput';
 
 const Picker = ({ onColorChange }) => {
   const selector = useCallback(
-    ({ main }) => ({ activeColor: main.activeColor, colors: main.colors }),
+    ({ main: { activeColor, colors } }) => ({ activeColor, colors }),
     []
   );
 

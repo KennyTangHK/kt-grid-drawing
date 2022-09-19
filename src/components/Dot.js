@@ -9,9 +9,9 @@ const Dot = ({ r, c }) => {
   const dispatch = useDispatch();
 
   const selector = useCallback(
-    ({ main }) => ({
-      value: main.grid[r][c],
-      isPickerOpen: main.isPickerOpen && main.pickerPosition.r === r && main.pickerPosition.c === c
+    ({ main: { grid, isPickerOpen, pickerPosition } }) => ({
+      value: grid[r][c],
+      isPickerOpen: isPickerOpen && pickerPosition.r === r && pickerPosition.c === c
     }),
     [r, c]
   );
