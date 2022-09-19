@@ -28,13 +28,13 @@ const LoadButton = () => {
   if (isOpen) {
     return (
       <div className='w-max px-2 py-4 bg-violet-100 ring-2 ring-violet-900 rounded'>
-        <div className='flex flex-row items-center space-x-2'>
+        <div className='flex items-center space-x-2'>
           <div className='flex h-8'>
             <input
               onChange={ fileChangeCallback }
               type='file'
               accept='.txt,text/*'
-              className='block h-full text-sm text-slate-500 file:h-full file:px-4 file:rounded file:text-base file:text-white file:bg-violet-500 file:border-0 hover:file:bg-violet-400'
+              className='block h-full text-sm text-slate-500 file:cursor-pointer file:h-full file:px-4 file:rounded file:text-base file:text-white file:bg-violet-500 file:border-0 hover:file:bg-violet-400'
             />
           </div>
           <div className='flex w-2 h-px' />

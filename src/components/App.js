@@ -22,7 +22,7 @@ const App = () => {
   return (
     <div className='w-max'>
       <div className='w-max mx-16 py-8'>
-        <div className='flex flex-row space-x-3 items-center'>
+        <div className='flex space-x-3 items-center'>
           <div className='flex'><LoadButton /></div>
           <div className='flex'><SaveButton /></div>
           <div className='flex'><ExportButton /></div>

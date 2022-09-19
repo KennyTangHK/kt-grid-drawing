@@ -30,7 +30,7 @@ const Picker = ({ onColorChange }) => {
 
   return (
     <div className='relative -translate-x-1/2 w-max px-3 py-4 bg-violet-100 ring-2 ring-violet-900 rounded'>
-      <div className='flex flex-row space-x-3 leading-6'>
+      <div className='flex space-x-3 leading-6'>
         <div className='w-4 h-4 flex'>
           <ColorInput value={ activeColor } onChange={ onActiveColorChange } />
         </div>

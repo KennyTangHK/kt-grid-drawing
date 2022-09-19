@@ -41,7 +41,7 @@ const ResetButton = () => {
   if (isOpen) {
     return (
       <div className='w-max px-2 py-4 bg-red-100 ring-2 ring-red-900 rounded'>
-        <div className='flex flex-row items-center space-x-2'>
+        <div className='flex items-center space-x-2'>
           <label htmlFor='width' className='flex text-sm'>長度</label>
           <div className='flex h-8'>
             <input
