@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import { useStore } from 'react-redux';
-import { exportGridToFile } from '../helpers';
+import { exportGridToDataUrl, downloadDataUrl } from '../helpers';
 
 const ExportButton = () => {
   const store = useStore();
@@ -24,7 +24,9 @@ const ExportButton = () => {
       const { main } = store.getState();
       const { grid, width, height } = main;
 
-      exportGridToFile(grid, width, height, 20, fileName);
+      const dataUrl = exportGridToDataUrl(grid, width, height, 20);
+      downloadDataUrl(dataUrl, `${ fileName }.png`);
+
       closeCallback();
     },
     [store, fileName, closeCallback]
