@@ -53,7 +53,7 @@ const SaveButton = () => {
             <button
               className='h-8 px-4 rounded text-white bg-violet-500 hover:bg-violet-400'
               onClick={ saveCallback }
-            >儲存</button>
+            >另存</button>
           </div>
           <div className='flex h-8'>
             <button
@@ -70,7 +70,7 @@ const SaveButton = () => {
     <button
       className='h-8 px-4 rounded text-violet-500 bg-violet-100 hover:bg-violet-200'
       onClick={ openCallback }
-    >儲存</button>
+    >另存</button>
   );
 };
 
